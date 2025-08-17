@@ -47,10 +47,10 @@ onMounted(() => {
 
 // добавим поочерёдное появление .good
   gsap.utils.toArray('.goods .good').forEach((el, i) => {
-    tl.from(el, {
+    tl.from(el as Element, {
       y: 50,
       opacity: 0,
-      duration: 2  ,
+      duration: 2,
       ease: 'power2.out',
     }, 2 + i * .3); // смещаем начало каждой анимации
   });
@@ -102,6 +102,8 @@ onMounted(() => {
   position: relative;
   overflow: hidden;
   background: linear-gradient(245.06deg, #EDDDC6 49.57%, #F8EAD6 87.14%);
+
+  min-height: 100vh;
 
   display: flex;
   justify-content: center;

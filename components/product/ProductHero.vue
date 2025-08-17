@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import {ref, onMounted} from 'vue'
+import { ref, onMounted } from 'vue'
 import gsap from 'gsap'
-import {ScrollTrigger} from 'gsap/ScrollTrigger'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useTabs } from '~/composables/useTabs'
+import type { TabItem } from '~/types'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -10,29 +12,44 @@ const about = ref<HTMLElement | null>(null)
 const tabs = ref<HTMLElement | null>(null)
 const tabsContent = ref<HTMLElement | null>(null)
 
-const activeTab = ref('desc')
-const showTabsContent = ref(true)
+// Используем composable для табов
+const productTabs: TabItem[] = [
+  {
+    id: 'desc',
+    label: 'Описание',
+    content: `Умная безводная сыворотка с максимальной концентрацией Бетулинсодержащего экстракта бересты 5% для
+    ежедневного лучшего результата омоложения — свежий цвет лица, выравнивание рельефа кожи, лифтинг эффект.
+    <br/>
+    Сыворотка питает и увлажняет кожу, восстанавливает липидный барьер, повышает регенерацию, стимулирует рост
+    молодых клеток эпидермиса.
+    <br/>
+    Этот товар также можно купить в наборе «Вечерний уход»`
+  },
+  {
+    id: 'ingredients',
+    label: 'Состав',
+    content: 'Вода, глицерин, экстракт бересты, бетулин, масло ши, витамин Е, экстракт ромашки и другие компоненты.'
+  },
+  {
+    id: 'usage',
+    label: 'Применение',
+    content: 'Наносите на чистую кожу лица вечером перед сном. Избегайте попадания в глаза. Подходит для ежедневного использования.'
+  }
+]
 
-function openTab(tab: string) {
-  activeTab.value = tab
-}
-
+const { activeTab, openTab, isTabActive } = useTabs(productTabs, 'desc')
 
 onMounted(() => {
   if (!trackedSection.value || !about.value || !tabs.value || !tabsContent.value) return
-
-  // Стартовое состояние
-  // gsap.set([about.value, tabs.value, tabsContent.value], { y: 50, opacity: 0 })
 
   // Цвет иконки (как у тебя было)
   const target = trackedSection.value
   if (target) {
     const observer = new IntersectionObserver(([entry]) => {
-      trackingState.iconColor = entry.isIntersecting ? '#FDF5CE' : '#066E31'
-    }, {threshold: 0.1})
+      // trackingState.iconColor = entry.isIntersecting ? '#FDF5CE' : '#066E31'
+    }, { threshold: 0.1 })
     observer.observe(target)
   }
-
 
   // Основная timeline
   const tl = gsap.timeline({
@@ -46,18 +63,13 @@ onMounted(() => {
   })
 
   // Слайд 1 — появление about и кнопок вкладок
-  tl.to(about.value, {y: 100, opacity: 0, duration: 0.5, ease: 'power2.out'})
+  tl.to(about.value, { y: 100, opacity: 0, duration: 0.5, ease: 'power2.out' })
 })
-
 </script>
 
 <template>
-  <button class="product__shop">
-    <img src="/assets/images/shop-cart.png" alt="">
-  </button>
+
   <section class="product" ref="trackedSection">
-
-
     <div class="container">
       <div class="product__badges">
         <img src="/assets/images/goods/bages/anti-age.png" alt="" class="product__badge">
@@ -67,8 +79,6 @@ onMounted(() => {
       </div>
 
       <div class="product__content" ref="content">
-
-
         <!-- ABOUT -->
         <div class="product__about" ref="about">
           <h3 class="product__title">NIGHT-TIME CARE SERUM</h3>
@@ -87,30 +97,20 @@ onMounted(() => {
         <!-- TABS -->
         <div class="product__tabs" ref="tabs">
           <div class="product__tabs-buttons">
-            <button class="product__tab" @click="openTab('desc')">Описание</button>
-            <button class="product__tab" @click="openTab('ingredients')">Состав</button>
-            <button class="product__tab" @click="openTab('usage')">Применение</button>
+            <button 
+              v-for="tab in productTabs" 
+              :key="tab.id"
+              class="product__tab" 
+              :class="{ 'product__tab--active': isTabActive(tab.id) }"
+              @click="openTab(tab.id)"
+            >
+              {{ tab.label }}
+            </button>
           </div>
 
-          <div class="product__tabs-content" ref="tabsContent" v-if="showTabsContent">
-            <template v-if="activeTab === 'desc'">
-              Умная безводная сыворотка с максимальной концентрацией Бетулинсодержащего экстракта бересты 5% для
-              ежедневного лучшего результата омоложения — свежий цвет лица, выравнивание рельефа кожи, лифтинг эффект.
-              <br/>
-              Сыворотка питает и увлажняет кожу, восстанавливает липидный барьер, повышает регенерацию, стимулирует рост
-              молодых клеток эпидермиса.
-              <br/>
-              Этот товар также можно купить в наборе «Вечерний уход»
-            </template>
-            <template v-else-if="activeTab === 'ingredients'">
-              Вода, глицерин, экстракт бересты, бетулин, масло ши, витамин Е, экстракт ромашки и другие компоненты.
-            </template>
-            <template v-else-if="activeTab === 'usage'">
-              Наносите на чистую кожу лица вечером перед сном. Избегайте попадания в глаза. Подходит для ежедневного
-              использования.
-            </template>
+          <div class="product__tabs-content" ref="tabsContent">
+            <div v-html="productTabs.find(tab => tab.id === activeTab)?.content"></div>
           </div>
-
         </div>
       </div>
     </div>
@@ -135,12 +135,6 @@ onMounted(() => {
     overflow-y: hidden;
   }
 
-  &__shop {
-    position: fixed !important;
-    bottom: 10%;
-    right: 80px;
-    z-index: 9999;
-  }
 
   &__badges {
   position: fixed;
@@ -253,6 +247,10 @@ onMounted(() => {
     &:hover {
       background: rgba(253, 245, 206, 0.5);
     }
+  }
+
+  &__tab--active {
+    background: rgba(253, 245, 206, 0.5);
   }
 
   &__tabs-content {

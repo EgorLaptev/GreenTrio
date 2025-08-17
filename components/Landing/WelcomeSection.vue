@@ -17,5 +17,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 
 <style scoped>
-
+.welcome {
+  min-height: 100vh;
+}
 </style>

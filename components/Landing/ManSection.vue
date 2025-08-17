@@ -25,6 +25,8 @@
   background-size: cover;
   z-index: -1;
 
+  min-height: 100vh;
+
   &__svg-text {
     max-width: 50%;
   }

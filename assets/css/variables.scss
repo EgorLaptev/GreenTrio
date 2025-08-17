@@ -1,0 +1,150 @@
+// CSS Variables based on our constants
+:root {
+  // Colors
+  --color-primary: #1d6b2b;
+  --color-secondary: #807668;
+  --color-accent: #FDF5CE;
+  --color-background: #FFFFF0;
+  --color-white: #FFFFFF;
+  --color-transparent: transparent;
+  --color-overlay: rgba(246, 245, 245, 0.18);
+  --color-shadow: rgba(253, 245, 206, 0.3);
+
+  // Spacing
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-xxl: 80px;
+
+  // Border radius
+  --border-radius-sm: 16px;
+  --border-radius-md: 20px;
+  --border-radius-lg: 32px;
+  --border-radius-xl: 48px;
+  --border-radius-full: 100px;
+
+  // Font sizes
+  --font-size-xs: 18px;
+  --font-size-sm: 22px;
+  --font-size-md: 24px;
+  --font-size-lg: 28px;
+  --font-size-xl: 32px;
+  --font-size-xxl: 40px;
+  --font-size-huge: 100px;
+
+  // Z-index
+  --z-base: 1;
+  --z-overlay: 100;
+  --z-modal: 1000;
+  --z-tooltip: 2000;
+  --z-fixed: 9999;
+
+  // Animation
+  --animation-fast: 0.2s;
+  --animation-normal: 0.3s;
+  --animation-slow: 0.4s;
+  --animation-slower: 0.5s;
+
+  // Breakpoints
+  --breakpoint-mobile: 768px;
+  --breakpoint-tablet: 1024px;
+  --breakpoint-desktop: 1280px;
+  --breakpoint-wide: 1580px;
+}
+
+// SCSS Variables (for use in other files)
+$colors: (
+  primary: #1d6b2b,
+  secondary: #807668,
+  accent: #FDF5CE,
+  background: #FFFFF0,
+  white: #FFFFFF,
+  transparent: transparent,
+  overlay: rgba(246, 245, 245, 0.18),
+  shadow: rgba(253, 245, 206, 0.3)
+);
+
+$spacing: (
+  xs: 8px,
+  sm: 16px,
+  md: 24px,
+  lg: 32px,
+  xl: 48px,
+  xxl: 80px
+);
+
+$border-radius: (
+  sm: 16px,
+  md: 20px,
+  lg: 32px,
+  xl: 48px,
+  full: 100px
+);
+
+$font-sizes: (
+  xs: 18px,
+  sm: 22px,
+  md: 24px,
+  lg: 28px,
+  xl: 32px,
+  xxl: 40px,
+  huge: 100px
+);
+
+$z-index: (
+  base: 1,
+  overlay: 100,
+  modal: 1000,
+  tooltip: 2000,
+  fixed: 9999
+);
+
+$animation: (
+  fast: 0.2s,
+  normal: 0.3s,
+  slow: 0.4s,
+  slower: 0.5s
+);
+
+$breakpoints: (
+  mobile: 768px,
+  tablet: 1024px,
+  desktop: 1280px,
+  wide: 1580px
+);
+
+// Mixins
+@mixin glass-effect($opacity: 0.18, $blur: 4px) {
+  background: rgba(246, 245, 245, $opacity);
+  backdrop-filter: blur($blur);
+  box-shadow: -3px 3px 2px 0 rgba(253, 245, 206, 0.3);
+}
+
+@mixin button-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin responsive($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: map-get($breakpoints, mobile)) { @content; }
+  } @else if $breakpoint == tablet {
+    @media (max-width: map-get($breakpoints, tablet)) { @content; }
+  } @else if $breakpoint == desktop {
+    @media (max-width: map-get($breakpoints, desktop)) { @content; }
+  } @else if $breakpoint == wide {
+    @media (max-width: map-get($breakpoints, wide)) { @content; }
+  }
+}

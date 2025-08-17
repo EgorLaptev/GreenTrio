@@ -1,40 +1,7 @@
 <script setup lang="ts">
-const ingredients = [
-  {
-    id: 1,
-    name: 'БЕТУЛИН',
-    image: '/assets/images/chemical/maslo.png',
-    alt: 'Бетулин',
-    description: 'природный компонент из берёсты, который восстанавливает, защищает и омолаживает кожу.'
-  },
-  {
-    id: 2,
-    name: 'МАСЛО МИНДАЛЯ',
-    image: '/assets/images/chemical/betulin.png',
-    alt: 'Масло миндаля',
-    description: 'богатый источник нутриентов для здоровья кожи'
-  },
-  {
-    id: 3,
-    name: 'ЭКСТРАКТ ЯГОД',
-    image: '/assets/images/chemical/yagoda.png',
-    alt: 'Экстракт ягод',
-    description: 'натуральный антиоксидант для сияния и молодости кожи'
-  },
-  {
-    id: 4,
-    name: 'ЭКСТРАКТ ЯГОД',
-    image: '/assets/images/chemical/yagoda.png',
-    alt: 'Экстракт ягод',
-    description: 'натуральный антиоксидант для сияния и молодости кожи'
-  }
-];
+import { useIngredients } from '~/composables/useIngredients'
 
-// Группируем ингредиенты по 2 для показа в слайдере
-const groupedIngredients: typeof ingredients[] = [];
-for (let i = 0; i < ingredients.length; i += 2) {
-  groupedIngredients.push(ingredients.slice(i, i + 2));
-}
+const { groupedIngredients } = useIngredients()
 </script>
 
 <template>

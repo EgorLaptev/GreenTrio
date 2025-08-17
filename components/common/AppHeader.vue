@@ -94,14 +94,6 @@ watch(isCatalogOpen, () => {
         height="100%"
         filterUnits="objectBoundingBox"
     >
-      <!--      <feTurbulence-->
-      <!--          type="fractalNoise"-->
-      <!--          baseFrequency="0.01 0.01"-->
-      <!--          numOctaves="1"-->
-      <!--          seed="5"-->
-      <!--          result="turbulence"-->
-      <!--      />-->
-      <!-- Seeds: 14, 17,  -->
 
       <feComponentTransfer in="turbulence" result="mapped">
         <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5"/>
@@ -311,7 +303,8 @@ watch(isCatalogOpen, () => {
   padding: 0 1.5rem;
   transition: 1s;
   box-sizing: content-box;
-  max-width: 1440px !important;
+  width: 90%;
+  max-width: 1920px !important;
   z-index: 9997;
 }
 
