@@ -26,14 +26,6 @@
         height="100%"
         filterUnits="objectBoundingBox"
     >
-      <!--      <feTurbulence-->
-      <!--          type="fractalNoise"-->
-      <!--          baseFrequency="0.01 0.01"-->
-      <!--          numOctaves="1"-->
-      <!--          seed="5"-->
-      <!--          result="turbulence"-->
-      <!--      />-->
-      <!-- Seeds: 14, 17,  -->
 
       <feComponentTransfer in="turbulence" result="mapped">
         <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5"/>
@@ -77,8 +69,6 @@
 
 <style scoped>
 
-
-/* LIQUID GLASS STYLES */
 .liquidGlass-wrapper {
   display: flex;
   overflow: hidden;

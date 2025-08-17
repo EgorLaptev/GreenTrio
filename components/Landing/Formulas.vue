@@ -66,7 +66,7 @@ onMounted(() => {
               <img src="/assets/images/chemical/yagoda.png" alt="" class="chemical__image">
               <div class="chemical__bottom">
                 <div class="chemical__decor"></div>
-                <p class="chemical__name">Ягоды</p>
+                <p class="chemical__name">Ягода</p>
                 <div class="chemical__decor"></div>
               </div>
             </div>
